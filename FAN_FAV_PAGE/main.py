@@ -73,7 +73,7 @@ if st.session_state.last_successful_data_fetch_time > 0:
     # pdt_offset = datetime.timedelta(hours=-7)
     # pdt_time = utc_time + pdt_offset
     # fetch_time_str = pdt_time.strftime("%Y-%m-%d %H:%M:%S PDT")
-    st.caption(f"Data last successfully fetched around: {fetch_time_str}")
+    # st.caption(f"Data last successfully fetched around: {fetch_time_str}")
 else:
     st.caption("Attempting to fetch data...")
 
