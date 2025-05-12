@@ -66,13 +66,13 @@ df_main_poster_raw = load_data_from_url(main_poster_csv_url, "Main Posters")
 
 # --- Display Last Successful Data Fetch Time ---
 if st.session_state.last_successful_data_fetch_time > 0:
-    # fetch_time_str = datetime.datetime.fromtimestamp(st.session_state.last_successful_data_fetch_time).strftime(("%Y-%m-%d %H:%M:%S"))
-    # st.caption(f"Data last successfully fetched around: {fetch_time_str}")
+    fetch_time_str = datetime.datetime.fromtimestamp(st.session_state.last_successful_data_fetch_time).strftime(("%Y-%m-%d %H:%M:%S"))
+    st.caption(f"Data last successfully fetched around: {fetch_time_str}")
 
-    utc_time = datetime.datetime.fromtimestamp(st.session_state.last_successful_data_fetch_time, datetime.timezone.utc)
-    pdt_offset = datetime.timedelta(hours=-7)
-    pdt_time = utc_time + pdt_offset
-    fetch_time_str = pdt_time.strftime("%Y-%m-%d %H:%M:%S PDT")
+    # utc_time = datetime.datetime.fromtimestamp(st.session_state.last_successful_data_fetch_time, datetime.timezone.utc)
+    # pdt_offset = datetime.timedelta(hours=-7)
+    # pdt_time = utc_time + pdt_offset
+    # fetch_time_str = pdt_time.strftime("%Y-%m-%d %H:%M:%S PDT")
     st.caption(f"Data last successfully fetched around: {fetch_time_str}")
 else:
     st.caption("Attempting to fetch data...")
