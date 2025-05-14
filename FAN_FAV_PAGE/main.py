@@ -118,15 +118,18 @@ if 'POSTER_ID' in df_fan_fav.columns and not df_fan_fav.empty:
     # Group by POSTER_ID and count the number of occurrences (votes)
     df_polling = df_fan_fav.groupby('POSTER_ID').size().reset_index(name='Total Votes')
 
-    # Prepare main poster data for merging (select relevant columns and drop duplicates by POSTER_ID)
+    # Ensure 'POSTER_ID' is present and is the correct type before merging
     if 'POSTER_ID' in df_main_poster.columns:
+        # Convert 'POSTER_ID' to the same type in both DataFrames before merging
+        df_polling['POSTER_ID'] = df_polling['POSTER_ID'].astype(str)
+        df_main_poster['POSTER_ID'] = df_main_poster['POSTER_ID'].astype(str)
+
         details_to_merge = df_main_poster[['POSTER_ID', 'Poster Title', "PI's Full Name"]].drop_duplicates(subset=['POSTER_ID'])
         df_polling = pd.merge(df_polling, details_to_merge, on='POSTER_ID', how='left')
     else:
         st.warning("No 'POSTER_ID' in Main Poster data to merge details.")
         df_polling['Poster Title'] = "Details Unavailable"
         df_polling["PI's Full Name"] = "Details Unavailable"
-
 
     # Fill missing titles or PI names if any POSTER_ID from fan_fav was not in main_poster
     df_polling['Poster Title'] = df_polling['Poster Title'].fillna("Title Not Found")
@@ -159,6 +162,9 @@ else:
         st.info("No fan votes recorded yet or fan favorites data is empty.")
     else:
         st.warning("Could not generate polling results. 'POSTER_ID' column might be missing in the Fan Favorites data after processing.")
+
+# --- Display total votes ---
+st.subheader(f"Total Submitted Votes: {len(df_fan_fav)}")
 
 # --- Optional: Display raw or merged DataFrames for debugging ---
 # with st.expander("Show Debugging Data"):
